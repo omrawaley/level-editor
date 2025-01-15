@@ -13,7 +13,7 @@ void CodeGenerator::generateCode(Level& level, std::vector<Tile>& tiles)
 
     enumCode += "};";
 
-    std::string levelCode = "const int " + this->levelName + " [" + std::to_string(level.getHeight()) + "]" + "[" + std::to_string(level.getWidth()) + "]" + "\n{\n";
+    std::string levelCode = "const TileType " + this->levelName + " [" + std::to_string(level.getHeight()) + "]" + "[" + std::to_string(level.getWidth()) + "]" + "\n{\n";
 
     for(size_t row = 0; row < level.data.size(); ++row)
     {
