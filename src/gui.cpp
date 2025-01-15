@@ -7,6 +7,9 @@
 #include "../deps/imgui/backends/imgui_impl_sdl2.h"
 #include "../deps/imgui/backends/imgui_impl_sdlrenderer2.h"
 
+bool GUI::show = true;
+bool GUI::active = false;
+
 void GUI::init(SDL_Window* window, SDL_Renderer* renderer)
 {
     IMGUI_CHECKVERSION();
@@ -34,7 +37,11 @@ void GUI::processEvent(SDL_Event& event)
 
 void GUI::showTileEditor(SDL_Renderer* renderer, std::vector<Tile>& tiles, int*& selectedTileId)
 {
-    ImGui::Begin("Tile Editor");
+    ImGui::SetNextWindowSize(ImVec2{320, 600});
+
+    ImGui::SetNextWindowPos(ImVec2{960, 0});
+
+    ImGui::Begin("Tile Editor", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
     static ImGui::FileBrowser fileDialog {ImGuiFileBrowserFlags_EditPathString};
 
@@ -96,7 +103,11 @@ void GUI::showTileEditor(SDL_Renderer* renderer, std::vector<Tile>& tiles, int*&
 
 void GUI::showLevelSettings(SDL_Renderer* renderer, Level& level)
 {
-    ImGui::Begin("Level Settings");
+    ImGui::SetNextWindowSize(ImVec2{320, 150});
+
+    ImGui::SetNextWindowPos(ImVec2{960, 570});
+
+    ImGui::Begin("Level Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
     static int levelWidth;
     static int levelHeight;
@@ -114,7 +125,11 @@ void GUI::showLevelSettings(SDL_Renderer* renderer, Level& level)
 
 void GUI::showCodeGeneratorSettings(Level& level, CodeGenerator& codeGenerator, std::vector<Tile>& tiles)
 {
-    ImGui::Begin("Code Generator");
+    ImGui::SetNextWindowSize(ImVec2{960, 150});
+
+    ImGui::SetNextWindowPos(ImVec2{0, 570});
+
+    ImGui::Begin("Code Generator", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
     static char levelName[32];
 
@@ -132,6 +147,11 @@ void GUI::showCodeGeneratorSettings(Level& level, CodeGenerator& codeGenerator, 
         codeGenerator.generateCode(level, tiles);
     }
 
+    if(ImGui::Button("Copy Code"))
+    {
+        ImGui::SetClipboardText(codeGenerator.getCode().c_str());
+    }
+
     ImGui::InputTextMultiline("##codeblock", const_cast<char*>(codeGenerator.getCode().c_str()), sizeof(codeGenerator.getCode()), ImVec2(-FLT_MIN, 200), ImGuiInputTextFlags_ReadOnly);
 
     ImGui::End();
@@ -139,9 +159,14 @@ void GUI::showCodeGeneratorSettings(Level& level, CodeGenerator& codeGenerator, 
 
 void GUI::draw(SDL_Renderer* renderer, std::vector<Tile>& tiles, Level& level, int*& selectedTile, CodeGenerator& codeGenerator)
 {
+    if(!GUI::show)
+        return;
+
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+
+    GUI::active = ImGui::IsAnyItemActive() ? true : false;
 
     GUI::showTileEditor(renderer, tiles, selectedTile);
 

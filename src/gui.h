@@ -8,6 +8,9 @@
 
 namespace GUI
 {
+    extern bool show;
+    extern bool active;
+
     void init(SDL_Window* window, SDL_Renderer* renderer);
 
     void free();

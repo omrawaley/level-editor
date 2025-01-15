@@ -15,7 +15,7 @@ void Editor::loadMedia()
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG | IMG_INIT_PNG);
 
-	this->window = SDL_CreateWindow("Chip-8 Emulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
+	this->window = SDL_CreateWindow("C++ Level Editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
 	this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     GUI::init(this->window, this->renderer);
@@ -52,6 +52,11 @@ void Editor::eventLoop()
 					case SDLK_ESCAPE:
 						this->quit = true;
 						break;
+
+                    case SDLK_m:
+                        if(!GUI::active)
+                            GUI::show = !GUI::show;
+                        break;
                 }
 				break;
 		}
@@ -72,6 +77,9 @@ void Editor::update()
 
     gridX = (x + this->camera.x) / 32;
     gridY = (y + this->camera.y) / 32;
+
+    if(!GUI::active)
+    {
 
     if(this->keys[SDL_SCANCODE_SPACE] && this->selectedTileId != nullptr && gridX < this->level.getWidth() && gridY < this->level.getHeight())
     {
@@ -96,6 +104,7 @@ void Editor::update()
     if(this->keys[SDL_SCANCODE_D])
     {
         this->camera.x += 1;
+    }
     }
 }
 
