@@ -53,7 +53,6 @@ void GUI::showTileEditor(SDL_Renderer* renderer, std::vector<Tile>& tiles, int*&
         ImGui::PushID(i);
 
         ImGui::Text("%s", tiles.at(i).name.c_str());
-        ImGui::Text("%d", tiles.at(i).id);
 
         ImGui::Image(tiles.at(i).texture, ImVec2{50, 50});
 
