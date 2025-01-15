@@ -80,31 +80,30 @@ void Editor::update()
 
     if(!GUI::active)
     {
+        if(this->keys[SDL_SCANCODE_SPACE] && this->selectedTileId != nullptr && gridX < this->level.getWidth() && gridY < this->level.getHeight())
+        {
+            this->level.data.at(gridY).at(gridX) = this->tiles.at(*this->selectedTileId);
+        }
 
-    if(this->keys[SDL_SCANCODE_SPACE] && this->selectedTileId != nullptr && gridX < this->level.getWidth() && gridY < this->level.getHeight())
-    {
-        this->level.data.at(gridY).at(gridX) = this->tiles.at(*this->selectedTileId);
-    }
+        if(this->keys[SDL_SCANCODE_W])
+        {
+            this->camera.y -= 1;
+        }
 
-    if(this->keys[SDL_SCANCODE_W])
-    {
-        this->camera.y -= 1;
-    }
+        if(this->keys[SDL_SCANCODE_S])
+        {
+            this->camera.y += 1;
+        }
 
-    if(this->keys[SDL_SCANCODE_S])
-    {
-        this->camera.y += 1;
-    }
+        if(this->keys[SDL_SCANCODE_A])
+        {
+            this->camera.x -= 1;
+        }
 
-    if(this->keys[SDL_SCANCODE_A])
-    {
-        this->camera.x -= 1;
-    }
-
-    if(this->keys[SDL_SCANCODE_D])
-    {
-        this->camera.x += 1;
-    }
+        if(this->keys[SDL_SCANCODE_D])
+        {
+            this->camera.x += 1;
+        }
     }
 }
 
