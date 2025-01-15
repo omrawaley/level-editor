@@ -140,6 +140,8 @@ void GUI::showCodeGeneratorSettings(Level& level, CodeGenerator& codeGenerator, 
         codeGenerator.setLevelName(levelName);
     }
 
+    ImGui::Spacing();
+
     static char code[4096];
 
     if(ImGui::Button("Generate Code"))
@@ -152,7 +154,9 @@ void GUI::showCodeGeneratorSettings(Level& level, CodeGenerator& codeGenerator, 
         ImGui::SetClipboardText(codeGenerator.getCode().c_str());
     }
 
-    ImGui::InputTextMultiline("##codeblock", const_cast<char*>(codeGenerator.getCode().c_str()), sizeof(codeGenerator.getCode()), ImVec2(-FLT_MIN, 200), ImGuiInputTextFlags_ReadOnly);
+    ImGui::Spacing();
+
+    ImGui::Text("%s", codeGenerator.getCode().c_str());
 
     ImGui::End();
 }
