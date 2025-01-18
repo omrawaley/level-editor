@@ -11,3 +11,6 @@ CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
 bin
+imgui.ini
+.vscode
+.DS_Store
