@@ -6,10 +6,10 @@ void CodeGenerator::generateCode(Level& level, std::vector<Tile>& tiles)
 
     for(auto& tile : tiles)
     {
-        enumCode += tile.name + ",\n";
+        enumCode += "    " + tile.name + ",\n";
     }
 
-    enumCode += "None,\n";
+    enumCode += "    None,\n";
 
     enumCode += "};";
 
@@ -17,6 +17,8 @@ void CodeGenerator::generateCode(Level& level, std::vector<Tile>& tiles)
 
     for(size_t row = 0; row < level.data.size(); ++row)
     {
+        levelCode += "    ";
+
         for(size_t col = 0; col < level.data.at(row).size(); ++col)
         {
             levelCode += "TileType::";
